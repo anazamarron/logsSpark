@@ -26,7 +26,10 @@ public class Logs implements Serializable {
 
     public Logs(String linea) {
 
-        String reg = "(\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) \\[([^:]+):(\\d+:\\d+:\\d+) ([^\\]]+)\\] \\\"(\\S+) (.*?) (\\S+)\\\" (\\S+) (\\S+) (\\\".*?\\\") (\\\".*?\\\") (\\d) (\\S+)";
+
+        //String reg = "(\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) \\[([^:]+):(\\d+:\\d+:\\d+) ([^\\]]+)\\] \\\"(\\S+) (.*?) (\\S+)\\\" (\\S+) (\\S+) (\\\".*?\\\") (\\\".*?\\\") (\\d) (\\S+)";
+        String reg = "(\\S+) (\\S+) (\\S+) (([^,]*)(, ?([^,]*))*) (\\S+) (\\S+) (\\S+) \\[([^:]+):(\\d+:\\d+:\\d+) ([^\\]]+)\\] \\\"(\\S+) (.*?) (\\S+)\\\" (\\S+) (\\S+) (\\\".*?\\\") (\\\".*?\\\") (\\d+) (\\S+)";
+
         Pattern pattern = Pattern.compile(reg);
         Matcher matches = pattern.matcher(linea);
         if (matches.find())
@@ -45,7 +48,6 @@ public class Logs implements Serializable {
             this.user_agent = matches.group(12);
             this.tiempoEjecucion = matches.group(13);
             this.noseque2 = matches.group(14);
-
         }else{
             this.gMaquinas = "error";
             this.nombreMaquina = "error";
@@ -62,6 +64,7 @@ public class Logs implements Serializable {
             this.tiempoEjecucion = "error";
             this.noseque2 = "error";
             System.out.println("ERROR");
+            System.out.println(linea);
         }
 
     }

@@ -7,7 +7,8 @@ import org.apache.spark.SparkContext._
 import scala.util.matching.Regex
 
 object VocentoApp extends App {
-  val logFile = "ppll_canalgrana.com_web.log"
+  //val logFile = "ppll_canalgrana.com_web.log"
+  val logFile = "logs/*.log"
   val sc = new SparkContext("local", "Simple", "$SPARK_HOME"
     , List("target/spark-ejercicio-1.0.jar"))
   val file = sc.textFile(logFile)
@@ -21,11 +22,12 @@ object VocentoApp extends App {
     }
   )
 
-  val claveValorRDD = logRDD.map(x=>(x.getgMaquinas(),1))
+  val claveValorRDD = logRDD.map(x=>(x.getDominio(),1))
 
   val reducedRDD = claveValorRDD.reduceByKey((acum,nuevo) => (acum+nuevo))
 
   val mappedRDD = reducedRDD.map(x=>(x._1,x._2)).foreach(r=>println(r._1, r._2))
+
 
 
 // Para cada uno que sume las medallas y que nos de el úlimo año
